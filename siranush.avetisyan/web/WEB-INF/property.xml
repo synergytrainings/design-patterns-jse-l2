@@ -1,0 +1,6 @@
+<root>
+    <property name="Property1" value="1"/>
+    <property name="Property2" value="2"/>
+    <property name="Property3" value="3"/>
+    <property name="Property4" value="4"/>
+</root>
