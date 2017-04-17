@@ -1,9 +1,9 @@
-package vigen.vardanyan;
+package singleton;
 
 import java.io.Serializable;
 
 /**
- * Created by Vigen.Vardanyan on 13/4/2017.
+ * Created by Vigen.Vardanyan on 4/13/2017.
  */
 public class SerializedSingleton implements Serializable {
 
