@@ -1,0 +1,25 @@
+public class HomeTv {
+   private static Deque<Film> stackOfFilm;
+   private static HomeTv myTv = null;
+   
+   private HomeTv() {
+      // Exists only to defeat instantiation.
+   }
+
+   public static HomeTv getInstance() {
+      if(myTv == null) {
+         myTv = new HomeTv();
+      }
+	  if(stackOfFilm == null){
+		stackOfFilm = new ArrayDeque<Film>();
+	  }
+      return myTv;
+   }
+   
+   public static void playFilm(Film filmToPlay){
+		stackOfFilm.push(filmToPlay);
+   }
+   public static boolean isThereFilmToPlay(){
+		return stackOfFilm.isEmpty();
+   }
+}
