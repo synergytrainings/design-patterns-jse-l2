@@ -1,0 +1,68 @@
+
+export class DataTableInformation{
+    constructor(public sortBy: string,
+                public sortType: string,
+                public pageNumber: number,
+                public pageSize: number,
+                public rowsCount: number = 0,
+                public pageSizes: Array<number> = [10,15,20,25,30]){
+
+    }
+}
+
+export class DataTable{
+    constructor(public dataTableInformation : DataTableInformation){
+
+    }
+
+    public getPages(): Array<number> {
+        let pagesCount: number = this.dataTableInformation.pageSize == 0? 0 : Math.ceil(this.dataTableInformation.rowsCount/this.dataTableInformation.pageSize);
+        let pages: Array<number> = [];
+        if(pagesCount <= 0){
+            return [1];
+        }
+        if(pagesCount < 4){
+            switch (pagesCount){
+                case 1: return [1];
+                case 2: return [1,2];
+                case 3: return [1,2,3];
+            }
+        }
+        if(this.dataTableInformation.pageNumber == 1){
+            pages = [1,2,pagesCount];
+        }
+        if(this.dataTableInformation.pageNumber == 2){
+            pages = [1,2,3,pagesCount];
+        }
+        if(this.dataTableInformation.pageNumber > 2 && this.dataTableInformation.pageNumber < pagesCount-1)
+        {
+            pages = [1,this.dataTableInformation.pageNumber-1,this.dataTableInformation.pageNumber,this.dataTableInformation.pageNumber+1,pagesCount];
+        }
+        if(this.dataTableInformation.pageNumber == pagesCount - 1){
+            pages = [1,this.dataTableInformation.pageNumber-1,this.dataTableInformation.pageNumber,pagesCount];
+        }
+        if(this.dataTableInformation.pageNumber == pagesCount){
+            pages = [1,pagesCount-1,pagesCount];
+        }
+        return pages;
+    }
+
+    public selectPageSize(event: any): void{
+        this.dataTableInformation.pageSize = +event.srcElement.value > 0 ? +event.srcElement.value : this.dataTableInformation.pageSize;
+    }
+}
+
+export class DataTableFactory {
+    private static dataTableMap = new Map<DataTableInformation , DataTable>();
+
+    public static getDataTable(dataTableInformation : DataTableInformation) : DataTable {
+    let dataTable = this.dataTableMap.get(dataTableInformation);
+
+    if(dataTable == null) {
+        dataTable = new DataTable(dataTableInformation);
+        this.dataTableMap.set(dataTableInformation, dataTable);
+        console.log("New DataTable with properties : " + dataTableInformation.toString());
+    }
+    return dataTable;
+}
+}
