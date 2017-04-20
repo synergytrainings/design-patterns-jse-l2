@@ -1,0 +1,62 @@
+public interface Shape {
+   void printInformation();
+}
+
+public class Cube implements Shape {
+   private String color;
+   private int length;
+   private int width;
+   private int height;
+
+   public Cube(String color){
+      this.color = color;		
+   }
+
+   public void setLength(int length) {
+      this.length = length;
+   }
+
+   public void setWidth(int length) {
+      this.length = length;
+   }
+
+   public void setHeight(int length) {
+      this.height = height;
+   }
+
+   @Override
+   public void printInformation() {
+      System.out.println("Cube: Color : " + color + ", length : " + length + ", width :" + width + ", height :" + height);
+   }
+}
+
+public class CubeFactory {
+   private static final HashMap<String, Shape> cubeMap = new HashMap();
+
+   public static Shape getCube(String color) {
+      Cube cube = (Cube)cubeMap.get(color);
+
+      if(cube == null) {
+         cube = new Cube(color);
+         cubeMap.put(color, cube);
+         System.out.println("New Cube with color : " + color);
+      }
+      return cube;
+   }
+}
+
+
+public class CubeFactoryTest {
+   private static final String colors[] = { "White", "Kanach", "Dexin", "Kapuyt", "Black" };
+   public static void main(String[] args) {
+
+      for(int i=0; i < 20; ++i) {
+         Cube cube = (Cube)CubeFactory.getCube(colors[i%5]);
+         cube.setLength(i*20);
+         cube.setWidth(i*60);
+         cube.setHeight(i*68);
+         cube.printInformation();
+      }
+   }
+   
+}
