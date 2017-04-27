@@ -1,0 +1,85 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
+/**
+ * Created by oleg.hovsepyan on 4/27/2017.
+ */
+        
+interface Iterable{
+    public Iterator<Grant> getIterator();
+}
+
+class Grant{
+    public String name;
+    public String description;
+    public String year;
+
+    public Grant(String name,
+                 String description,
+                 String year){
+        this.name = name;
+        this.description = description;
+        this.year = year;
+
+    }
+  
+    public void print(){
+		System.out.println(this.name);
+    }
+}
+class CollectionOfGrantsActive implements Iterable{
+    private ArrayList<Grant> activeGrants;
+    
+    public CollectionOfGrantsActive() {
+        this.activeGrants = new ArrayList<Grant>();
+    }
+
+    public Iterator<Grant> getIterator(){
+        return activeGrants.iterator();
+    }
+
+    public void addGrant(Grant grantToAdd){
+        activeGrants.add(grantToAdd);
+    }
+
+}
+
+class CollectionOfGrantsInactive implements Iterable{
+    public Grant[] inactiveGrants;
+    public int numberOfGrants;
+    
+    public CollectionOfGrantsInactive() {
+        this.inactiveGrants = new Grant[100];
+        this.numberOfGrants = 0;
+    }
+    
+    public Iterator<Grant> getIterator(){
+        return Arrays.asList(this.inactiveGrants).iterator();
+    }
+
+    public void addGrant(Grant grantToAdd){
+        this.inactiveGrants[numberOfGrants] = grantToAdd;
+        this.numberOfGrants++;
+    }
+
+}
+public class MyTest{
+    public static void main(String[] args) {
+        CollectionOfGrantsActive activeGrantsCollection = new CollectionOfGrantsActive();
+        CollectionOfGrantsInactive inactiveGrantsCollection = new CollectionOfGrantsInactive();
+            for(int i = 0 ; i < 21 ; i++){
+                Grant grantToAdd = new Grant("User" + i , "Description" + i , "Year" + i);
+                activeGrantsCollection.addGrant(grantToAdd);
+                inactiveGrantsCollection.addGrant(grantToAdd);
+            }
+            Iterator<Grant> activeIter = activeGrantsCollection.getIterator();
+            Iterator<Grant> inactiveIter = inactiveGrantsCollection.getIterator();
+            while(activeIter.hasNext()){
+                activeIter.next().print();
+            }
+            while(inactiveIter.hasNext()){
+                inactiveIter.next().print();
+            }
+        }
+}

@@ -1,0 +1,58 @@
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ * Created by oleg.hovsepyan on 4/27/2017.
+ */
+        
+interface Iterator {
+
+	public boolean hasNext();
+	public Object next();
+}
+
+
+interface Iterable{
+    public Iterator getIterator();
+}
+
+class MyCollectionOfWords implements Iterable{
+	private String words[] = {"Cat","House","Dog","Sun","Water"};
+
+	public Iterator getIterator(){
+		MyIterator result = new MyIterator();
+		return result;
+	}
+
+
+	private class MyIterator implements Iterator{
+		private int index = 0;
+
+		public boolean hasNext()
+		{
+			if (index < words.length)
+				return true;
+			else
+				return false;
+		}
+		public Object next(){
+			if (this.hasNext())
+				return words[index++];
+			else
+				return null;
+		}
+	}
+}
+
+
+
+public class MyTest{
+    public static void main(String[] args) {
+      MyCollectionOfWords myCollection = new MyCollectionOfWords();
+      Iterator myIterator =  myCollection.getIterator();
+      while(myIterator.hasNext()){
+               System.out.println(myIterator.next());
+            }
+    }
+}
