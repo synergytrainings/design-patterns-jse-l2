@@ -1,4 +1,4 @@
-package singleton;
+package main.java.singleton;
 
 /**
  * Created by Vigen.Vardanyan on 4/13/2017.
