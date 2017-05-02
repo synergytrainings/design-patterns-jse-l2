@@ -19,6 +19,15 @@ public class Duck implements Bird {
 
     @Override
     public void fly() {
-        System.out.println(color + " Duck is flying with speed " + speed);
+        System.out.println("\n" + color + " Duck is flying with speed " + speed);
+    }
+
+    @Override
+    public void die() {
+        System.out.println(color + " duck killed! ☺ ");
+    }
+
+    public void vanish() {
+        System.out.println(color + " duck fled! ");
     }
 }
