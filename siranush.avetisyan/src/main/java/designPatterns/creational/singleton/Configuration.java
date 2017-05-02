@@ -14,7 +14,7 @@ public class Configuration {
     private Properties props = null;
 
     private Configuration() {
-        props = new Properties();
+        this.props = new Properties();
         InputStream input = null;
 
         try {
@@ -26,12 +26,12 @@ public class Configuration {
                 return;
             }
 
-            props.load(input);
+            this.props.load(input);
 
             //get the property value and print it out
-            System.out.println(props.getProperty("database"));
-            System.out.println(props.getProperty("dbuser"));
-            System.out.println(props.getProperty("dbpassword"));
+            System.out.println(this.props.getProperty("database"));
+            System.out.println(this.props.getProperty("dbuser"));
+            System.out.println(this.props.getProperty("dbpassword"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -46,17 +46,21 @@ public class Configuration {
         }
     }
 
-    public synchronized static Configuration getInstance() {
+    public static Configuration getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new Configuration();
+            synchronized (Configuration.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new Configuration();
+                }
+            }
         }
         return INSTANCE;
     }
 
     public String getProperty(String key) {
         String value = null;
-        if (props.containsKey(key)) {
-            value = (String) props.get(key);
+        if (this.props.containsKey(key)) {
+            value = (String) this.props.get(key);
         }
         return value;
     }

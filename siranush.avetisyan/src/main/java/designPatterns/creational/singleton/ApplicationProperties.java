@@ -24,7 +24,7 @@ public class ApplicationProperties {
     private HashMap<String, String> properties;
 
     private ApplicationProperties() {
-        properties = new HashMap<String, String>();
+        this.properties = new HashMap<>();
     }
 
     public static ApplicationProperties getInstance() {
@@ -65,7 +65,7 @@ public class ApplicationProperties {
                 String propertyName = templateNode.getAttributes().getNamedItem("name").getNodeValue();
                 String propertyValue = templateNode.getAttributes().getNamedItem("value").getNodeValue();
 
-                properties.put(propertyName, propertyValue);
+                this.properties.put(propertyName, propertyValue);
             }
         } catch (SAXException e) {
             throw new RuntimeException(e);
@@ -77,7 +77,7 @@ public class ApplicationProperties {
     }
 
     public String getProperty(String name) {
-        return properties.get(name);
+        return this.properties.get(name);
     }
 
 }

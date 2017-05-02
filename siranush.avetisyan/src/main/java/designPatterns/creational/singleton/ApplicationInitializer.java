@@ -24,9 +24,13 @@ public class ApplicationInitializer {
         ApplicationProperties.getInstance().load(CONFIG_FILE);
     }
 
-    public synchronized static ApplicationInitializer getInstance() {
+    public static ApplicationInitializer getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ApplicationInitializer();
+            synchronized (ApplicationInitializer.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ApplicationInitializer();
+                }
+            }
         }
         return INSTANCE;
     }
