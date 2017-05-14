@@ -45,4 +45,21 @@ public class BookImpl implements Book {
         return "Book{\n\tauthor=" + this.author + ",\n\ttitle=" + this.title + ",\n\tpublishYear=" + this.publishYear + "\n}";
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        }
+        if(object == null || !object.getClass().equals(this.getClass())) {
+            return false;
+        }
+        Book book = (Book)object;
+        return this.author.equals(book.getAuthor()) && this.title.equals(book.getTitle()) && this.publishYear.equals(book.getPublishYear());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.author.hashCode() + this.getTitle().hashCode() + this.publishYear.hashCode();
+    }
+
 }
